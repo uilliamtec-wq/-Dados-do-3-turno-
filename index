@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Colaboradores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input, select, button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button.btn-add {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button.btn-add:hover {
+            background-color: #219150;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Gerenciamento de Colaboradores</h2>
+    
+    <!-- Formulário de Adição -->
+    <form id="formColaborador">
+        <input type="text" id="nome" placeholder="Nome completo" required>
+        <input type="text" id="matricula" placeholder="Matrícula" required>
+        <input type="text" id="cargo" placeholder="Cargo" required>
+        <select id="vinculo" required>
+            <option value="">Selecione o Vínculo</option>
+            <option value="Boticário">Boticário</option>
+            <option value="Terceiro">Terceiro</option>
+        </select>
+        <button type="submit" class="btn-add">Adicionar Colaborador</button>
+    </form>
+
+    <!-- Tabela de Dados -->
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Matrícula</th>
+                <th>Cargo</th>
+                <th>Vínculo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaCorpo">
+            <!-- As linhas serão inseridas aqui dinamicamente -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const form = document.getElementById('formColaborador');
+    const tabelaCorpo = document.getElementById('tabelaCorpo');
+
+    // Funcao para adicionar colaborador
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const nome = document.getElementById('nome').value;
+        const matricula = document.getElementById('matricula').value;
+        const cargo = document.getElementById('cargo').value;
+        const vinculo = document.getElementById('vinculo').value;
+
+        const novaLinha = document.createElement('tr');
+        novaLinha.innerHTML = `
+            <td>${nome}</td>
+            <td>${matricula}</td>
+            <td>${cargo}</td>
+            <td>${vinculo}</td>
+            <td><button class="btn-delete" onclick="removerLinha(this)">Remover</button></td>
+        `;
+
+        tabelaCorpo.appendChild(novaLinha);
+
+        // Limpa o formulario
+        form.reset();
+    });
+
+    // Funcao para remover colaborador
+    function removerLinha(botao) {
+        const linha = botao.parentElement.parentElement;
+        linha.remove();
+    }
+</script>
+
+</body>
+</html>
